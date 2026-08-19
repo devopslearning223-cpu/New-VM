@@ -3,10 +3,10 @@ name: "Terraform Azure VM Deployment"
 on:
   push:
     branches:
-      - VMbranch
+      - main
   pull_request:
     branches:
-      - VMbranch
+      - main
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 jobs:

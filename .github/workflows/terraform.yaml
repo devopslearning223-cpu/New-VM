@@ -1,0 +1,51 @@
+name: "Terraform Azure VM Deployment"
+
+on:
+  push:
+    branches:
+      - VMbranch
+  pull_request:
+    branches:
+      - VMbranch
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  terraform:
+    name: "Terraform Init, Plan & Apply"
+    runs-on: ubuntu-latest
+
+    # Azure Authentication Credentials (Hardcoded as requested)
+    # Replace these placeholders with your actual Azure Service Principal details
+    env:
+      ARM_CLIENT_ID: "f6fe45c9-b8ce-43d7-9e15-7a7e96283a66"
+      ARM_CLIENT_SECRET: "dj_8Q~M5LdTpvaEtvgKtudyzfnapRkfK4GzrpbFH"
+      ARM_SUBSCRIPTION_ID: "57f5a851-b829-498c-b06e-9f6073342c6a"
+      ARM_TENANT_ID: "e51b7d6e-53ba-4cdb-ab7b-ac83fc80c898"
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Terraform CLI
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "latest"
+
+      # Step 3: Initialize Terraform Working Directory
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 4: Validate Terraform Configuration
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Step 5: Generate Terraform Execution Plan
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # Step 6: Apply Terraform Plan (Runs automatically on push / workflow_dispatch)
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/VMbranch' || github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+        run: terraform apply -auto-approve tfplan

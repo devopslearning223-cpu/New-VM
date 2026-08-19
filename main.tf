@@ -5,14 +5,6 @@ resource "azurerm_resource_group" "rg" {
   tags     = var.tags
 }
 
-# 1b. New Resource Group: rg-learner
-resource "azurerm_resource_group" "rg_learner" {
-  name     = "rg-learner"
-  location = "East US"
-  tags     = var.tags
-}
-
-
 # 2. Virtual Network (VNet)
 resource "azurerm_virtual_network" "vnet" {
   name                = var.vnet_name

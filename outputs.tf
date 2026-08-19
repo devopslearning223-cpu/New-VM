@@ -3,12 +3,6 @@ output "resource_group_name" {
   description = "Resource Group Name"
 }
 
-output "learner_resource_group_name" {
-  value       = azurerm_resource_group.rg_learner.name
-  description = "Learner Resource Group Name"
-}
-
-
 output "vnet_name" {
   value       = azurerm_virtual_network.vnet.name
   description = "Virtual Network Name"
@@ -39,7 +33,3 @@ output "nat_gateway_public_ip" {
   description = "Public IP assigned to NAT Gateway for Outbound Internet Access"
 }
 
-output "vm_private_ip" {
-  value       = azurerm_network_interface.vm_nic.private_ip_address
-  description = "Private IP address of the Virtual Machine"
-}

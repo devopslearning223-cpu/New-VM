@@ -44,8 +44,3 @@ jobs:
       # Step 5: Generate Terraform Execution Plan
       - name: Terraform Plan
         run: terraform plan -out=tfplan
-
-      # Step 6: Apply Terraform Plan (Runs automatically on push / workflow_dispatch)
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/VMbranch' || github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
-        run: terraform apply -auto-approve tfplan
